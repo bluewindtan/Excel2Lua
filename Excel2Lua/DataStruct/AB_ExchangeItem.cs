@@ -7,12 +7,12 @@ using System.IO;
 
 namespace Excel2Lua
 {
-	public class AB_intimeonline : ActivityBase
+	public class AB_ExchangeItem : ActivityBase
 	{
 		List<BaseSheetInfo> m_listBase = null;
-		List<IntimeOnlineInfo> m_listOwn = null;
+		List<ExchangeItemInfo> m_listOwn = null;
 
-		public AB_intimeonline(string strExcelSheet)
+		public AB_ExchangeItem(string strExcelSheet)
 			: base(strExcelSheet)
 		{
 
@@ -31,7 +31,7 @@ namespace Excel2Lua
 				throw new Exception("Failed to read the sheet=" + CustomDefine.SHEET_BASE + " of excel=" + reader.ToString());
 			}
 			////
-			m_listOwn = reader.GetSheetData<IntimeOnlineInfo>(m_strExcelSheet);
+			m_listOwn = reader.GetSheetData<ExchangeItemInfo>(m_strExcelSheet);
 
 			return true;
 		}
@@ -56,56 +56,69 @@ namespace Excel2Lua
 			sw.WriteLine(strTemp);
 			sw.WriteLine();
 
-			sw.WriteLine("--活动名称 ");
-			strTemp = "local activity_title = \"" + bsInfo.activity_title + "\";";
+			sw.WriteLine("--活动显示起始时间 ");
+			strTemp = "local beginExhibitTime = \"" + bsInfo.beginExhibitTime + "\";";
 			sw.WriteLine(strTemp);
-			sw.WriteLine("--活动内容 ");
-			strTemp = "local activity_content = \"" + bsInfo.activity_content + "\";";
+			strTemp = "local endExhibitTime = \"" + bsInfo.endExhibitTime + "\";";
 			sw.WriteLine(strTemp);
 			sw.WriteLine();
 
-			sw.WriteLine("--活动显示起始时间 ");
-			strTemp = "local show_time_begin = \"" + bsInfo.show_time_begin + "\";";
+			sw.WriteLine("--活动起始时间 ");
+			strTemp = "local exchangeBeginTime  = \"" + bsInfo.exchangeBeginTime + "\";";
 			sw.WriteLine(strTemp);
-			strTemp = "local show_time_end = \"" + bsInfo.show_time_end + "\";";
+			strTemp = "local exchangeEndTime = \"" + bsInfo.exchangeEndTime + "\";";
+			sw.WriteLine(strTemp);
+			sw.WriteLine();
+
+			sw.WriteLine("--活动名称 ");
+			strTemp = "local activity_Title = \"" + bsInfo.activity_Title + "\";";
+			sw.WriteLine(strTemp);
+			sw.WriteLine();
+			sw.WriteLine("--活动内容 ");
+			strTemp = "local exchangeActivityIntro = \"" + bsInfo.exchangeActivityIntro + "\";";
 			sw.WriteLine(strTemp);
 			sw.WriteLine();
 
 			sw.WriteLine("--活动起始公告 ");
-			strTemp = "local activity_begin_announce = \"" + bsInfo.activity_begin_announce + "\";";
+			strTemp = "local exchangeStartAnnouce = \"" + bsInfo.exchangeStartAnnouce + "\";";
 			sw.WriteLine(strTemp);
-			strTemp = "local activity_end_announce = \"" + bsInfo.activity_end_announce + "\";";
+			strTemp = "local exchangeEndAnnouce = \"" + bsInfo.exchangeEndAnnouce + "\";";
+			sw.WriteLine(strTemp);
+			sw.WriteLine();
+
+			sw.WriteLine("--兑换物品 ");
+			strTemp = "local exchangeItemType = " + bsInfo.exchangeItemType.ToString() + ";";
 			sw.WriteLine(strTemp);
 			sw.WriteLine();
 			/////////////////////////////////////////////////
-			sw.WriteLine("local InTimeOnlineActivityData = ");
+			sw.WriteLine("local ExhangeRewardTable = ");
 			sw.WriteLine("{");
 			/////////////////////////////////////////////////
 			int nCount = 1;
 			strTemp = "";
 			// Loop the data list 
-			IntimeOnlineInfo infoFirst = null;
+			ExchangeItemInfo infoFirst = null;
 			string strMale = string.Empty;
 			string strFemale = string.Empty;
 			for (int i = 0; i < m_listOwn.Count; i++)
 			{
-				IntimeOnlineInfo info = m_listOwn[i];
+				ExchangeItemInfo info = m_listOwn[i];
 				// male item 
 				string sMaleItem = string.Empty;
 				bool bMaleValid = info.malereward_itemid > 0;
 				if (bMaleValid)
 				{
-					sMaleItem = info.malereward_itemid.ToString()
-						+ "," + info.malereward_itemcount.ToString()
+					sMaleItem = info.malereward_itemid.ToString() 
+						+ "," + info.malereward_itemcount.ToString() 
 						+ "," + info.malereward_itemvalidity.ToString();
 				}
 				// female item 
 				string sFemaleItem = string.Empty;
 				bool bFemaleValid = info.femalereward_itemid > 0;
 				if (bFemaleValid)
-				{
-					sFemaleItem = info.femalereward_itemid.ToString()
-						+ "," + info.femalereward_itemcount.ToString()
+				{ 
+					sFemaleItem = info.femalereward_itemid.ToString() 
+						+ "," + info.femalereward_itemcount.ToString() 
 						+ "," + info.femalereward_itemvalidity.ToString();
 				}
 				// check the same kind 
@@ -137,27 +150,22 @@ namespace Excel2Lua
 			sw.WriteLine("}");
 			sw.WriteLine();
 
-			strTemp = "function AddInTimeOnlineActivityData(index, value) " + Environment.NewLine 
-			+ "\tif value ~= nil then" + Environment.NewLine 
-			+ "\t\tlocal begintime = value[\"begintime\"];" + Environment.NewLine
-			+ "\t\tlocal endtime = value[\"endtime\"];" + Environment.NewLine
-			+ "\t\tlocal triggeringtime = value[\"triggeringtime\"];" + Environment.NewLine
+			strTemp = "function AddExchangeItemTableInfo(index, value)" + Environment.NewLine 
+			+ "\tif value ~= nil then" + Environment.NewLine
+			+ "\t\tlocal requireItemNum = value[\"requireItemNum\"];" + Environment.NewLine
 			+ "\t\tlocal malereward = value[\"malereward\"];" + Environment.NewLine
 			+ "\t\tlocal femalereward = value[\"femalereward\"];" + Environment.NewLine
-			+ "\t\tlocal moneyreward = value[\"moneyreward\"];" + Environment.NewLine
-			+ "\t\tlocal mailtitle = value[\"mailtitle\"];" + Environment.NewLine
-			+ "\t\tlocal mailcontent = value[\"mailcontent\"];" + Environment.NewLine
-			+ "\t\tAddInTimeOnlineActivity(index, begintime, endtime, triggeringtime, malereward, femalereward, moneyreward, mailtitle, mailcontent);" + Environment.NewLine
+			+ "\t\tlocal money = value[\"money\"];" + Environment.NewLine
+			+ "\t\tAddExchangeItemReward(index, requireItemNum, maleReward, femaleReward, money);" + Environment.NewLine
 			+ "\tend" + Environment.NewLine 
 			+ "end" + Environment.NewLine 
-			+ Environment.NewLine 
-		    + "function AddInTimeOnlineBriefInfo(weight)" + Environment.NewLine
+			+ Environment.NewLine
+			+ "function AddExchangeItemInfo(weight)" + Environment.NewLine
 			+ "\tif weight ~= nil then" + Environment.NewLine
-			+ "\t\tAddInTimeOnlineActivityBriefInfo(exhibit, weight, regularImageName, thumbnailName, activity_title, activity_content, show_time_begin, show_time_end, activity_begin_announce, activity_end_announce);" + Environment.NewLine
+			+ "\t\tAddExchangeItemBriefInfo(exhibit, weight,regularImageName, thumbnailName, exchangeItemType, beginExhibitTime, endExhibitTime, exchangeBeginTime, exchangeEndTime, activity_Title, exchangeActivityIntro, exchangeStartAnnouce, exchangeEndAnnouce);" + Environment.NewLine
+			+ "\t\ttable.foreach(ExhangeRewardTable, AddExchangeItemTableInfo);" + Environment.NewLine
 			+ "\tend" + Environment.NewLine 
-			+ "end" + Environment.NewLine 
-			+ Environment.NewLine 
-			+ "table.foreach(InTimeOnlineActivityData, AddInTimeOnlineActivityData);" + Environment.NewLine;
+			+ "end" + Environment.NewLine;
 			sw.WriteLine(strTemp);
 
 			sw.Flush();
@@ -174,30 +182,30 @@ namespace Excel2Lua
 			[ExcelHeader("小图")]
 			public string thumbnailName { get; set; }
 			[ExcelHeader("活动名称")]
-			public string activity_title { get; set; }
+			public string activity_Title { get; set; }
 			[ExcelHeader("活动内容")]
-			public string activity_content { get; set; }
+			public string exchangeActivityIntro { get; set; }
 			[ExcelHeader("显示开始时间")]
-			public string show_time_begin { get; set; }
+			public string beginExhibitTime { get; set; }
 			[ExcelHeader("显示结束时间")]
-			public string show_time_end { get; set; }
+			public string endExhibitTime { get; set; }
+			[ExcelHeader("活动开始时间")]
+			public string exchangeBeginTime { get; set; }
+			[ExcelHeader("活动结束时间")]
+			public string exchangeEndTime { get; set; }
 			[ExcelHeader("开始公告")]
-			public string activity_begin_announce { get; set; }
+			public string exchangeStartAnnouce { get; set; }
 			[ExcelHeader("结束公告")]
-			public string activity_end_announce { get; set; }
+			public string exchangeEndAnnouce { get; set; }
+			[ExcelHeader("兑换物品")]
+			public int exchangeItemType { get; set; }
 
 		}
 
-		class IntimeOnlineInfo
+		class ExchangeItemInfo
 		{
-			[ExcelHeader("日期")]
-			public string activity_day { get; set; }
-			[ExcelHeader("开始时间")]
-			public string begintime { get; set; }
-			[ExcelHeader("结束时间")]
-			public string endtime { get; set; }
-			[ExcelHeader("触发时间")]
-			public string triggeringtime { get; set; }
+			[ExcelHeader("需求兑换物品的数量")]
+			public int requireItemNum { get; set; }
 			[ExcelHeader("男奖励物品编号")]
 			public int malereward_itemid { get; set; }
 			[ExcelHeader("男奖励物品名称")]
@@ -215,48 +223,24 @@ namespace Excel2Lua
 			[ExcelHeader("女奖励物品时限")]
 			public int femalereward_itemvalidity { get; set; }
 			[ExcelHeader("金券奖励")]
-			public int moneyreward { get; set; }
-			[ExcelHeader("邮件标题")]
-			public string mailtitle { get; set; }
-			[ExcelHeader("邮件内容")]
-			public string mailcontent { get; set; }
+			public int money { get; set; }
 
-			public bool IsSameKind(IntimeOnlineInfo info)
+			public bool IsSameKind(ExchangeItemInfo info)
 			{
 				if (null == info)
 				{
 					return false;
 				}
-				if ( 0 != activity_day.CompareTo( info.activity_day ) )
-				{
-					return false;
-				}
-				if (0 != begintime.CompareTo(info.begintime))
-				{
-					return false;
-				}
-				if (0 != endtime.CompareTo(info.endtime))
-				{
-					return false;
-				}
-				if (0 != triggeringtime.CompareTo(info.triggeringtime))
-				{
-					return false;
-				}
 
-				return true;
+				return requireItemNum == info.requireItemNum;
 			}
 			
 			public string BuildLua(int nCount, string strMale, string strFemale)
 			{
 
-				return "\t[" + nCount.ToString() + "] = { begintime = \"" + activity_day + " " + begintime
-					+ "\", endtime = \"" + activity_day + " " + endtime
-					+ "\", triggeringtime = \"" + triggeringtime
-					+ "\", malereward = \"" + strMale + "\", femalereward = \"" + strFemale + "\", moneyreward = " + moneyreward
-					+ "\", mailtitle = \"" + mailtitle
-					+ "\", mailcontent = \"" + mailcontent
-					+ "\" },";
+				return "\t[" + nCount.ToString() + "] = { requireItemNum = " + requireItemNum
+					+ ", maleReward = \"" + strMale + "\", femaleReward = \"" + strFemale + "\", money = " + money
+					+ " },";
 			}
 
 		}
