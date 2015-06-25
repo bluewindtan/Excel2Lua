@@ -63,7 +63,7 @@ namespace Excel2Lua
 			}
 			else
 			{
-				throw new Exception(strExcel + " Excel exists, but there is no corresponding operator.");
+				throw new Exception(strExcel + " exists, but there is no corresponding operator.");
 			}
 
 			return operE2L;

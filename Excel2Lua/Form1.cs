@@ -20,19 +20,22 @@ namespace Excel2Lua
 
 		private void button1_Click(object sender, EventArgs e)
 		{
+			bool bExcelSuffix = checkBox1.Checked;
 			FolderBrowserDialog dlg = new FolderBrowserDialog();
 			dlg.RootFolder = Environment.SpecialFolder.MyComputer;
 			dlg.SelectedPath = Environment.CurrentDirectory;
-			dlg.Description = "请选择目录";
+			dlg.Description = "Please select a folder:";
 			if (DialogResult.OK == dlg.ShowDialog())
 			{
 				string sDirectory = dlg.SelectedPath;
-				ProcessDirectory(sDirectory);
-				MessageBox.Show("Process finished！OK！");
+				if (ProcessDirectory(sDirectory, bExcelSuffix))
+				{
+					MessageBox.Show("Process finished！OK！");
+				}
 			}
 		}
 
-		private void ProcessDirectory(string sDirectory)
+		private bool ProcessDirectory(string sDirectory, bool bExcelSuffix)
 		{
 			// 判断是否目录 
 			if (Directory.Exists(sDirectory))
@@ -43,22 +46,46 @@ namespace Excel2Lua
 					if (fsInfo is FileInfo)
 					{
 						FileInfo fi = fsInfo as FileInfo;
+						
 						try
 						{
-							E2LDataMgr.ConvertE2L(fi.DirectoryName, fi.Name);
+							if (bExcelSuffix && !fi.Name.EndsWith(".xls") && !fi.Name.EndsWith(".xlsx"))
+							{
+								continue;
+							}
+							else 
+							{
+								E2LDataMgr.ConvertE2L(fi.DirectoryName, fi.Name);
+							}
 						}
 						catch (System.Exception ex)
 						{
-							MessageBox.Show("Failed to convert excel '" + fi.Name + "'.\r\nError is " + ex.Message);
-							continue;
+							string strMessage = "Failed to convert excel '" + fi.Name + "'.\r\nError is " + ex.Message;
+							strMessage += "\r\nDo you want to continue???";
+							DialogResult dlgResult = MessageBox.Show(strMessage, "error", MessageBoxButtons.OKCancel);
+							if (DialogResult.OK == dlgResult)
+							{
+								continue;
+							}
+							else
+							{
+								return false;
+							}
 						}
 					}
 					else if (fsInfo is DirectoryInfo)
 					{
-						ProcessDirectory(fsInfo.FullName);
+						ProcessDirectory(fsInfo.FullName, bExcelSuffix);
 					}
 				}
 			}
+			else
+			{
+				MessageBox.Show("Not exists " + sDirectory);
+				return false;
+			}
+
+			return true;
 		}
 
 	}
