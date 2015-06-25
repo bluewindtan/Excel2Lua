@@ -10,7 +10,7 @@ local beginExhibitTime = "2015-6-17 00:00:00";
 local endExhibitTime = "2015-6-30 23:59:59";
 
 --活动起始时间 
-local exchangeBeginTime  = "2015-6-17 00:00:00";
+local exchangeBeginTime = "2015-6-17 00:00:00";
 local exchangeEndTime = "2015-6-30 23:59:59";
 
 --活动名称 
@@ -38,8 +38,8 @@ local ExhangeRewardTable =
 function AddExchangeItemTableInfo(index, value)
 	if value ~= nil then
 		local requireItemNum = value["requireItemNum"];
-		local malereward = value["malereward"];
-		local femalereward = value["femalereward"];
+		local maleReward = value["maleReward"];
+		local femaleReward = value["femaleReward"];
 		local money = value["money"];
 		AddExchangeItemReward(index, requireItemNum, maleReward, femaleReward, money);
 	end

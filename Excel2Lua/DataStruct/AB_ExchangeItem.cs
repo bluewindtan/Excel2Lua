@@ -64,7 +64,7 @@ namespace Excel2Lua
 			sw.WriteLine();
 
 			sw.WriteLine("--活动起始时间 ");
-			strTemp = "local exchangeBeginTime  = \"" + bsInfo.exchangeBeginTime + "\";";
+			strTemp = "local exchangeBeginTime = \"" + bsInfo.exchangeBeginTime + "\";";
 			sw.WriteLine(strTemp);
 			strTemp = "local exchangeEndTime = \"" + bsInfo.exchangeEndTime + "\";";
 			sw.WriteLine(strTemp);
@@ -153,8 +153,8 @@ namespace Excel2Lua
 			strTemp = "function AddExchangeItemTableInfo(index, value)" + Environment.NewLine 
 			+ "\tif value ~= nil then" + Environment.NewLine
 			+ "\t\tlocal requireItemNum = value[\"requireItemNum\"];" + Environment.NewLine
-			+ "\t\tlocal malereward = value[\"malereward\"];" + Environment.NewLine
-			+ "\t\tlocal femalereward = value[\"femalereward\"];" + Environment.NewLine
+			+ "\t\tlocal maleReward = value[\"maleReward\"];" + Environment.NewLine
+			+ "\t\tlocal femaleReward = value[\"femaleReward\"];" + Environment.NewLine
 			+ "\t\tlocal money = value[\"money\"];" + Environment.NewLine
 			+ "\t\tAddExchangeItemReward(index, requireItemNum, maleReward, femaleReward, money);" + Environment.NewLine
 			+ "\tend" + Environment.NewLine 
