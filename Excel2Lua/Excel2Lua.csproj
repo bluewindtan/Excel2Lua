@@ -66,6 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataStruct\AB_CumulativeRecharge.cs" />
+    <Compile Include="DataStruct\AB_CumulativeSpend.cs" />
     <Compile Include="DataStruct\AB_ExchangeItem.cs" />
     <Compile Include="DataStruct\AB_OnlineReward.cs" />
     <Compile Include="DataStruct\ActivityBase.cs" />

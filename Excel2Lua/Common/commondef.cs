@@ -27,10 +27,14 @@ namespace Excel2Lua
 		public static string[] EXCEL_NAME = { "准点在线"
 												, "累计在线"
 												, "兑换活动"
+												, "累计充值"
+												, "累计消费"
 								  };
 		public static string[] LUA_NAME = { "intimeonline"
 											  , "OnlineReward"
 											  , "ExchangeItem"
+											  , "CumulativeRecharge"
+											  , "CumulativeSpend"
 								  };
 	}
 
