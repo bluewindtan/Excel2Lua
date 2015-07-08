@@ -15,7 +15,7 @@ local activity_content = "活动期间，在游戏中累计消费，即可成为
 
 -- 活动起始时间 
 local activity_begin_time = "2015-7-1 10:00:00";
-local activity_end_time  = "2015-7-14 23:59:59";
+local activity_end_time = "2015-7-14 23:59:59";
 
 -- 累计消费起始时间 
 local spend_begin_time = "2015-7-1 10:00:00";

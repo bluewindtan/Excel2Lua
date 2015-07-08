@@ -29,12 +29,14 @@ namespace Excel2Lua
 												, "兑换活动"
 												, "累计充值"
 												, "累计消费"
+												, "七天乐"
 								  };
 		public static string[] LUA_NAME = { "intimeonline"
 											  , "OnlineReward"
 											  , "ExchangeItem"
 											  , "CumulativeRecharge"
 											  , "CumulativeSpend"
+											  , "FresherActivity"
 								  };
 	}
 
