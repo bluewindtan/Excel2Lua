@@ -7,10 +7,10 @@ namespace Excel2Lua
 {
 	public class CustomDefine
 	{
-		// flag of replace item 
-		public static string Flag_Replace = "TanFeng";
-		// separator of item
-		public static string Separator_Item = " | ";
+		// separator between items
+		public static string Separator_Between_Item = " | ";
+		// separator in item
+		public static string Separator_In_Item = ",";
 		// prefix of namespace 
 		public static string Prefix_NameSpace = "Excel2Lua.";
 		//// prefix of E2L base 
@@ -38,7 +38,25 @@ namespace Excel2Lua
 											  , "CumulativeSpend"
 											  , "FresherActivity"
 								  };
+
+		//////////////////////////////////////////////////////////////
+		// 礼包
+		public static string Packet_EXCEL_NAME = "礼包";
+		public static string Packet_Lua_NAME_Prefix = "Packet_";
+
+		//////////////////////////////////////////////////////////////
+		// 工具文本 
+		public static string[] TOOL_TEXT = { "活动脚本转换"
+											   , "礼包脚本转换"
+								  };
 	}
+
+	public enum LuaType
+	{
+		Activity = 0,	// 活动 
+		Packet,			// 礼包
+	}
+
 
 	//////////////////////////////////////////////////
 	public class Lua_Item
@@ -56,7 +74,9 @@ namespace Excel2Lua
 
 		public string BuildLua()
 		{
-			return m_nID.ToString() + "," + m_nCount.ToString() + "," + m_nValidity.ToString();
+			return m_nID.ToString() + CustomDefine.Separator_In_Item
+				+ m_nCount.ToString() + CustomDefine.Separator_In_Item 
+				+ m_nValidity.ToString();
 		}
 
 	}

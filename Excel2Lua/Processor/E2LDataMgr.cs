@@ -70,17 +70,57 @@ namespace Excel2Lua
 		}
 
 
-		public static bool ConvertE2L(string sDirectory, string sFile)
+		public static bool ConvertE2L(string sDirectory, string sFile, LuaType nType)
 		{
 			// analyze the name of excel file 
 			if (sFile.Length <= 0)
 			{
 				return false;
 			}
-			string m_strFullExcelName = sDirectory + "\\" + sFile;
+			string strFullExcelName = sDirectory + "\\" + sFile;
+			bool nReturn = false;
+			if (LuaType.Activity == nType)
+			{
+				nReturn = ConvertE2L_Activity(sDirectory, sFile);
+			}
+			else if (LuaType.Packet == nType)
+			{
+				nReturn = ConvertE2L_Packet(sDirectory, sFile);
+			}
 
+			return nReturn;
+		}
+
+		private static bool ConvertE2L_Packet(string sDirectory, string sFile)
+		{
+			if (!sFile.Contains(CustomDefine.Packet_EXCEL_NAME))
+			{
+				return true;
+			}
+			E2L_Packet e2lPacket = new E2L_Packet(sDirectory, sFile);
+			if (null == e2lPacket)
+			{
+				return false;
+			}
+			// read the excel 
+			if (!e2lPacket.ReadExcel())
+			{
+				return false;
+			}
+			// save to lua 
+			if (!e2lPacket.SaveToLua())
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		private static bool ConvertE2L_Activity(string sDirectory, string sFile)
+		{
+			string strFullExcelName = sDirectory + "\\" + sFile;
 			// create the operator of this excel 
-			E2LBase operE2L = E2LDataMgr.Instance.CreateOperater(m_strFullExcelName);
+			E2LBase operE2L = E2LDataMgr.Instance.CreateOperater(strFullExcelName);
 			if (null == operE2L)
 			{
 				return false;

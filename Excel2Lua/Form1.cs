@@ -13,9 +13,12 @@ namespace Excel2Lua
 {
 	public partial class Form1 : Form
 	{
-		public Form1()
+		private LuaType m_luaType = LuaType.Activity;
+		public Form1(LuaType nType)
 		{
+			m_luaType = nType;
 			InitializeComponent();
+			this.Text = CustomDefine.TOOL_TEXT[(int)m_luaType];
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -55,7 +58,7 @@ namespace Excel2Lua
 							}
 							else 
 							{
-								E2LDataMgr.ConvertE2L(fi.DirectoryName, fi.Name);
+								E2LDataMgr.ConvertE2L(fi.DirectoryName, fi.Name, m_luaType);
 							}
 						}
 						catch (System.Exception ex)

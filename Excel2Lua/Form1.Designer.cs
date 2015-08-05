@@ -63,7 +63,7 @@
 			this.Controls.Add(this.button1);
 			this.Name = "Form1";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "活动脚本生成工具";
+			this.Text = "tool";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

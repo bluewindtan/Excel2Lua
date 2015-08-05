@@ -309,5 +309,30 @@ namespace MSExcelReader
                 return null;
             }
         }
+
+		public int GetSheetsCount()
+		{
+			if (m_WorkBook != null)
+			{
+				return m_WorkBook.NumberOfSheets;
+			}
+
+			return 0;
+		}
+
+		public string GetSheetNameByIndex(int nIndex)
+		{
+			string strSheetName = "";
+			if (m_WorkBook != null)
+			{
+				ISheet isheet = m_WorkBook.GetSheetAt(nIndex);
+				if (isheet != null)
+				{
+					strSheetName = m_WorkBook.GetSheetName(nIndex);
+					strSheetName = isheet.SheetName;
+				}
+			}
+			return strSheetName;
+		}
     }
 }

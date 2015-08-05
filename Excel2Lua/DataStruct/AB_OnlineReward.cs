@@ -294,7 +294,7 @@ namespace Excel2Lua
 				{
 					if (0 != i)
 					{
-						strMale += CustomDefine.Separator_Item;
+						strMale += CustomDefine.Separator_Between_Item;
 					}
 					strMale += m_listMaleItem[i].BuildLua();
 				}
@@ -305,7 +305,7 @@ namespace Excel2Lua
 				{
 					if (0 != i)
 					{
-						strFemale += CustomDefine.Separator_Item;
+						strFemale += CustomDefine.Separator_Between_Item;
 					}
 					strFemale += m_listFemaleItem[i].BuildLua();
 				}

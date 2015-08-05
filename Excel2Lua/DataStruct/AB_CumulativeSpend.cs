@@ -110,8 +110,8 @@ namespace Excel2Lua
 				if (bMaleValid)
 				{
 					sMaleItem = info.malereward_itemid.ToString()
-						+ "," + info.malereward_itemcount.ToString()
-						+ "," + info.malereward_itemvalidity.ToString();
+						+ CustomDefine.Separator_In_Item + info.malereward_itemcount.ToString()
+						+ CustomDefine.Separator_In_Item + info.malereward_itemvalidity.ToString();
 				}
 				// female item 
 				string sFemaleItem = string.Empty;
@@ -119,19 +119,19 @@ namespace Excel2Lua
 				if (bFemaleValid)
 				{
 					sFemaleItem = info.femalereward_itemid.ToString()
-						+ "," + info.femalereward_itemcount.ToString()
-						+ "," + info.femalereward_itemvalidity.ToString();
+						+ CustomDefine.Separator_In_Item + info.femalereward_itemcount.ToString()
+						+ CustomDefine.Separator_In_Item + info.femalereward_itemvalidity.ToString();
 				}
 				// check the same kind 
 				if (info.IsSameKind(infoFirst))
 				{
 					if (bMaleValid)
 					{
-						strMale += CustomDefine.Separator_Item + sMaleItem;
+						strMale += CustomDefine.Separator_Between_Item + sMaleItem;
 					}
 					if (bFemaleValid)
 					{
-						strFemale += CustomDefine.Separator_Item + sFemaleItem;
+						strFemale += CustomDefine.Separator_Between_Item + sFemaleItem;
 					}
 				}
 				else
@@ -301,7 +301,7 @@ namespace Excel2Lua
 				{
 					if (0 != i)
 					{
-						strMale += CustomDefine.Separator_Item;
+						strMale += CustomDefine.Separator_Between_Item;
 					}
 					strMale += m_listMaleItem[i].BuildLua();
 				}
@@ -312,7 +312,7 @@ namespace Excel2Lua
 				{
 					if (0 != i)
 					{
-						strFemale += CustomDefine.Separator_Item;
+						strFemale += CustomDefine.Separator_Between_Item;
 					}
 					strFemale += m_listFemaleItem[i].BuildLua();
 				}
