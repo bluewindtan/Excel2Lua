@@ -79,13 +79,20 @@ namespace Excel2Lua
 			}
 			string strFullExcelName = sDirectory + "\\" + sFile;
 			bool nReturn = false;
+			bool bIsPacket = sFile.Contains(CustomDefine.Packet_EXCEL_NAME);
 			if (LuaType.Activity == nType)
 			{
-				nReturn = ConvertE2L_Activity(sDirectory, sFile);
+				if (!bIsPacket)
+				{
+					nReturn = ConvertE2L_Activity(sDirectory, sFile);
+				}
 			}
 			else if (LuaType.Packet == nType)
 			{
-				nReturn = ConvertE2L_Packet(sDirectory, sFile);
+				if (bIsPacket)
+				{
+					nReturn = ConvertE2L_Packet(sDirectory, sFile);
+				}
 			}
 
 			return nReturn;

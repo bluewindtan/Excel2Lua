@@ -254,7 +254,7 @@ namespace Excel2Lua
 					+ "\", endtime = \"" + activity_day + " " + endtime
 					+ "\", triggeringtime = \"" + triggeringtime
 					+ "\", malereward = \"" + strMale + "\", femalereward = \"" + strFemale + "\", moneyreward = " + moneyreward
-					+ "\", mailtitle = \"" + mailtitle
+					+ ", mailtitle = \"" + mailtitle
 					+ "\", mailcontent = \"" + mailcontent
 					+ "\" },";
 			}
