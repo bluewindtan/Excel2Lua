@@ -61,7 +61,7 @@ namespace Excel2Lua
 			foreach (cPacketInfo info in m_listPacketInfo)
 			{
 				// lua file 
-				string strLua = targetDir + "\\" + CustomDefine.Packet_Lua_NAME_Prefix + info.PacketID + ".lua";
+				string strLua = targetDir + "\\" + CustomDefine.PACKET_LUA_NAME_PREFIX + info.PacketID + ".lua";
 				m_sWriter = new StreamWriter(strLua, false, encodeWriter);
 				if (null != m_sWriter)
 				{
@@ -165,10 +165,10 @@ namespace Excel2Lua
 					}
 					strMaleItem = info.malereward_itemid.ToString() 
 						+ CustomDefine.Separator_In_Item + info.malereward_itemcount.ToString()
-						+ CustomDefine.Separator_In_Item + info.malereward_itemvalidity.ToString();
+						+ CustomDefine.Separator_In_Item + CustomFunc.Day2Second(info.malereward_itemvalidity).ToString();
 					strFemaleItem = info.femalereward_itemid.ToString() 
 						+ CustomDefine.Separator_In_Item + info.femalereward_itemcount.ToString()
-						+ CustomDefine.Separator_In_Item + info.femalereward_itemvalidity.ToString();
+						+ CustomDefine.Separator_In_Item + CustomFunc.Day2Second(info.femalereward_itemvalidity).ToString();
 					strMaleAddItem = "\t\tAddItemToTable(ItemTable,  " + strMaleItem + ")";
 					strFemaleAddItem = "\t\tAddItemToTable(ItemTable,  " + strFemaleItem + ")";
 					listMaleItem.Add(strMaleItem);

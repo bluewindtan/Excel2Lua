@@ -79,28 +79,60 @@ namespace Excel2Lua
 			}
 			string strFullExcelName = sDirectory + "\\" + sFile;
 			bool nReturn = false;
-			bool bIsPacket = sFile.Contains(CustomDefine.Packet_EXCEL_NAME);
+			LuaType nLuaType = CustomFunc.JudgeType(sFile);
 			if (LuaType.Activity == nType)
 			{
-				if (!bIsPacket)
+				if (nLuaType == nType)
 				{
 					nReturn = ConvertE2L_Activity(sDirectory, sFile);
 				}
 			}
 			else if (LuaType.Packet == nType)
 			{
-				if (bIsPacket)
+				if (nLuaType == nType)
 				{
 					nReturn = ConvertE2L_Packet(sDirectory, sFile);
+				}
+			}
+			else if (LuaType.Box == nType)
+			{
+				if (nLuaType == nType)
+				{
+					nReturn = ConvertE2L_Box(sDirectory, sFile);
 				}
 			}
 
 			return nReturn;
 		}
 
+		private static bool ConvertE2L_Box(string sDirectory, string sFile)
+		{
+			if (!sFile.Contains(CustomDefine.BOX_EXCEL_NAME))
+			{
+				return true;
+			}
+			E2L_Box e2lBox = new E2L_Box(sDirectory, sFile);
+			if (null == e2lBox)
+			{
+				return false;
+			}
+			// read the excel 
+			if (!e2lBox.ReadExcel())
+			{
+				return false;
+			}
+			// save to lua 
+			if (!e2lBox.SaveToLua())
+			{
+				return false;
+			}
+
+			return true;
+		}
+
 		private static bool ConvertE2L_Packet(string sDirectory, string sFile)
 		{
-			if (!sFile.Contains(CustomDefine.Packet_EXCEL_NAME))
+			if (!sFile.Contains(CustomDefine.PACKET_EXCEL_NAME))
 			{
 				return true;
 			}

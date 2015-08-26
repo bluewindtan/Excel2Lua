@@ -88,7 +88,7 @@ namespace Excel2Lua
 				{
 					sMaleItem = info.malereward_itemid.ToString()
 						+ CustomDefine.Separator_In_Item + info.malereward_itemcount.ToString()
-						+ CustomDefine.Separator_In_Item + info.malereward_itemvalidity.ToString();
+						+ CustomDefine.Separator_In_Item + CustomFunc.Day2Second(info.malereward_itemvalidity).ToString();
 				}
 				// female item 
 				string sFemaleItem = string.Empty;
@@ -97,7 +97,7 @@ namespace Excel2Lua
 				{
 					sFemaleItem = info.femalereward_itemid.ToString()
 						+ CustomDefine.Separator_In_Item + info.femalereward_itemcount.ToString()
-						+ CustomDefine.Separator_In_Item + info.femalereward_itemvalidity.ToString();
+						+ CustomDefine.Separator_In_Item + CustomFunc.Day2Second(info.femalereward_itemvalidity).ToString();
 				}
 				// VIP male item 
 				string sVIPMaleItem = string.Empty;
@@ -106,7 +106,7 @@ namespace Excel2Lua
 				{
 					sVIPMaleItem = info.vipmalereward_itemid.ToString()
 						+ CustomDefine.Separator_In_Item + info.vipmalereward_itemcount.ToString()
-						+ CustomDefine.Separator_In_Item + info.vipmalereward_itemvalidity.ToString();
+						+ CustomDefine.Separator_In_Item + CustomFunc.Day2Second(info.vipmalereward_itemvalidity).ToString();
 				}
 				// VIP female item 
 				string sVIPFemaleItem = string.Empty;
@@ -115,7 +115,7 @@ namespace Excel2Lua
 				{
 					sVIPFemaleItem = info.vipfemalereward_itemid.ToString()
 						+ CustomDefine.Separator_In_Item + info.vipfemalereward_itemcount.ToString()
-						+ CustomDefine.Separator_In_Item + info.vipfemalereward_itemvalidity.ToString();
+						+ CustomDefine.Separator_In_Item + CustomFunc.Day2Second(info.vipfemalereward_itemvalidity).ToString();
 				}
 				// check the same kind 
 				if (info.IsSameKind(infoFirst))

@@ -27,5 +27,11 @@ namespace Excel2Lua
 			Form1 formActivity = new Form1(LuaType.Packet);
 			formActivity.ShowDialog();
 		}
+
+		private void button3_Click(object sender, EventArgs e)
+		{
+			Form1 formActivity = new Form1(LuaType.Box);
+			formActivity.ShowDialog();
+		}
 	}
 }

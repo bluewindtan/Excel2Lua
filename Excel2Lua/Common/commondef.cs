@@ -41,20 +41,64 @@ namespace Excel2Lua
 
 		//////////////////////////////////////////////////////////////
 		// 礼包
-		public static string Packet_EXCEL_NAME = "礼包";
-		public static string Packet_Lua_NAME_Prefix = "Packet_";
+		public static string PACKET_EXCEL_NAME = "礼包";
+		public static string PACKET_LUA_NAME_PREFIX = "Packet_";
+
+		// 宝箱
+		public static string BOX_EXCEL_NAME = "宝箱";
+		public static string BOX_LUA_NAME_PREFIX = "Box_";
 
 		//////////////////////////////////////////////////////////////
 		// 工具文本 
 		public static string[] TOOL_TEXT = { "活动脚本转换"
 											   , "礼包脚本转换"
+											   , "宝箱脚本转换"
 								  };
+	}
+
+	public class CustomFunc
+	{
+		// 将时限中的天数转换为秒数 
+		public static int Day2Second(int nValidity)
+		{
+			if (nValidity <= 0)
+			{
+				return nValidity;
+			}
+
+			return nValidity * 24 * 3600;
+		}
+
+		public static LuaType JudgeType(string sFile)
+		{
+			LuaType nType = LuaType.Activity;
+			
+			// 礼包
+			if (sFile.Contains(CustomDefine.PACKET_EXCEL_NAME))
+			{
+				nType = LuaType.Packet;
+			}
+			// 宝箱
+			if (sFile.Contains(CustomDefine.BOX_EXCEL_NAME))
+			{
+				nType = LuaType.Box;
+			}
+
+			return nType;
+		}
+
+		public static string ConvertBoolen2String(bool bValue)
+		{
+			return bValue ? "true" : "false";
+		}
+
 	}
 
 	public enum LuaType
 	{
 		Activity = 0,	// 活动 
 		Packet,			// 礼包
+		Box,			// 宝箱
 	}
 
 
@@ -76,7 +120,7 @@ namespace Excel2Lua
 		{
 			return m_nID.ToString() + CustomDefine.Separator_In_Item
 				+ m_nCount.ToString() + CustomDefine.Separator_In_Item 
-				+ m_nValidity.ToString();
+				+ CustomFunc.Day2Second(m_nValidity).ToString();
 		}
 
 	}

@@ -111,7 +111,7 @@ namespace Excel2Lua
 				{
 					sMaleItem = info.malereward_itemid.ToString()
 						+ CustomDefine.Separator_In_Item + info.malereward_itemcount.ToString()
-						+ CustomDefine.Separator_In_Item + info.malereward_itemvalidity.ToString();
+						+ CustomDefine.Separator_In_Item + CustomFunc.Day2Second(info.malereward_itemvalidity).ToString();
 				}
 				// female item 
 				string sFemaleItem = string.Empty;
@@ -120,7 +120,7 @@ namespace Excel2Lua
 				{
 					sFemaleItem = info.femalereward_itemid.ToString()
 						+ CustomDefine.Separator_In_Item + info.femalereward_itemcount.ToString()
-						+ CustomDefine.Separator_In_Item + info.femalereward_itemvalidity.ToString();
+						+ CustomDefine.Separator_In_Item + CustomFunc.Day2Second(info.femalereward_itemvalidity).ToString();
 				}
 				// check the same kind 
 				if (info.IsSameKind(infoFirst))
