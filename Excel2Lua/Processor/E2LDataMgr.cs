@@ -69,8 +69,33 @@ namespace Excel2Lua
 			return operE2L;
 		}
 
+		public static bool ConvertE2L(string sDirectory, string sFile)
+		{
+			// analyze the name of excel file 
+			if (sFile.Length <= 0)
+			{
+				return false;
+			}
+			string strFullExcelName = sDirectory + "\\" + sFile;
+			bool nReturn = false;
+			LuaType nLuaType = CustomFunc.JudgeType(sFile);
+			if (LuaType.Activity == nLuaType)
+			{
+				nReturn = ConvertE2L_Activity(sDirectory, sFile);
+			}
+			else if (LuaType.Packet == nLuaType)
+			{
+				nReturn = ConvertE2L_Packet(sDirectory, sFile);
+			}
+			else if (LuaType.Box == nLuaType)
+			{
+				nReturn = ConvertE2L_Box(sDirectory, sFile);
+			}
 
-		public static bool ConvertE2L(string sDirectory, string sFile, LuaType nType)
+			return nReturn;
+		}
+
+		public static bool ConvertE2LByType(string sDirectory, string sFile, LuaType nType)
 		{
 			// analyze the name of excel file 
 			if (sFile.Length <= 0)
