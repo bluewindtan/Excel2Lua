@@ -10,8 +10,8 @@ namespace Excel2Lua
 	public class E2L_Box
 	{
 		string m_strFullExcelName = "";
-		string m_strDirector = "";		
-		string m_strExcel = "";			
+		string m_strDirector = "";
+		string m_strExcel = "";		
 
 		ExcelReader m_excelReader = null;
 		StreamWriter m_sWriter = null;
@@ -46,6 +46,20 @@ namespace Excel2Lua
 			return true;
 		}
 
+		public bool CheckData()
+		{
+			bool bReturn = true;
+			foreach (cBoxInfo info in m_listBoxInfo)
+			{
+				if (!info.CheckData())
+				{
+					bReturn = false;
+				}
+			}
+
+			return bReturn;
+		}
+
 		public bool SaveToLua()
 		{
 			// Create the lua director 
@@ -56,13 +70,11 @@ namespace Excel2Lua
 			}
 
 			// UTF8 NO BOM 
-			Encoding encodeWriter = new UTF8Encoding(false);
-
 			foreach (cBoxInfo info in m_listBoxInfo)
 			{
 				// lua file 
 				string strLua = targetDir + "\\" + CustomDefine.BOX_LUA_NAME_PREFIX + info.BoxID + ".lua";
-				m_sWriter = new StreamWriter(strLua, false, encodeWriter);
+				m_sWriter = new StreamWriter(strLua, false, CustomDefine.WRITE_ENCODING);
 				if (null != m_sWriter)
 				{
 					info.SaveData(m_sWriter);
@@ -238,6 +250,21 @@ namespace Excel2Lua
 				strTemp = "table.foreach( BoxFemaleItem_" + BoxID.ToString() + ", AddBoxFemaleItem );";
 				sw.WriteLine(strTemp);
 				sw.WriteLine();
+			}
+
+			public bool CheckData()
+			{
+				bool bReturn = true;
+				foreach (BoxInfo info in m_listReward)
+				{
+					bool bCheckMale = ItemMgr.Instance.CheckItemAndLogError((ushort)info.malereward_itemid, CustomDefine.BOX_EXCEL_NAME);
+					bool bCheckFemale = ItemMgr.Instance.CheckItemAndLogError((ushort)info.femalereward_itemid, CustomDefine.BOX_EXCEL_NAME);
+					if (!bCheckFemale || !bCheckMale)
+					{
+						bReturn = false;
+					}
+				}
+				return bReturn;
 			}
 		}
 	}

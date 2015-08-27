@@ -26,6 +26,11 @@ namespace Excel2Lua
 			return true;
 		}
 
+		public virtual bool CheckData()
+		{
+			return true;
+		}
+
         public virtual bool SaveData(StreamWriter sw)
         {
 			if (null == sw)

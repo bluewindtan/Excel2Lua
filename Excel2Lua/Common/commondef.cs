@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace Excel2Lua
 {
 	public class CustomDefine
 	{
+		//////////////////////////////////////////////////////////////
 		// separator between items
 		public static string Separator_Between_Item = " | ";
 		// separator in item
@@ -17,10 +19,21 @@ namespace Excel2Lua
 		//public static string Prefix_E2LBase = "E2L_";
 		// prefix of activity base 
 		public static string Prefix_ActivityBase = "AB_";
+		// name of log file
+		public static string LOG_NAME = "E2LLog";
+		// suffix of log file
+		public static string SUFFIX_LOG = ".log";
 		
 		// sheet 
 		public static string SHEET_BASE = "通用";
 
+		//////////////////////////////////////////////////////////////
+		// path of item excel file
+		public static string ITEM_EXCEL_FILE = "物品表.xlsx";
+
+		//////////////////////////////////////////////////////////////
+		// encoding
+		public static Encoding WRITE_ENCODING = new UTF8Encoding(false);
 
 		//////////////////////////////////////////////////////////////
 
@@ -83,6 +96,11 @@ namespace Excel2Lua
 			{
 				nType = LuaType.Box;
 			}
+			// 物品表 
+			if (sFile.Contains(CustomDefine.ITEM_EXCEL_FILE))
+			{
+				nType = LuaType.Item;
+			}
 
 			return nType;
 		}
@@ -99,6 +117,9 @@ namespace Excel2Lua
 		Activity = 0,	// 活动 
 		Packet,			// 礼包
 		Box,			// 宝箱
+
+
+		Item,			// 物品表 
 	}
 
 

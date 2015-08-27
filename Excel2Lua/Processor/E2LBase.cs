@@ -12,8 +12,9 @@ namespace Excel2Lua
 		protected string m_strFullExcelName = "";
 		protected string m_strDirector = "";		
 		protected string m_strExcel = "";			 
-		protected string m_strExtension = "";		
-		protected string m_strLua = "";				
+		protected string m_strExtension = "";
+		protected string m_strLua = "";
+		protected string m_strLogWhere = "";		
 
 		public ActivityBase actiBase = null;
 
@@ -27,6 +28,7 @@ namespace Excel2Lua
 			m_strExcel = strExcel;
 			m_strExtension = strExtension;
 			m_strLua = strLua;
+			m_strLogWhere = strExcel;
 		}
 
 		public bool ReadExcel()
@@ -37,6 +39,11 @@ namespace Excel2Lua
 			}
 
 			return actiBase.ReadData(m_excelReader);
+		}
+
+		public bool CheckData()
+		{
+			return actiBase.CheckData();
 		}
 
 		public bool SaveToLua()
@@ -52,8 +59,7 @@ namespace Excel2Lua
 			string strLua = targetDir + "\\" + m_strLua + ".lua";
 
 			// UTF8 NO BOM 
-			Encoding encodeWriter = new UTF8Encoding(false);
-			m_sWriter = new StreamWriter(strLua, false, encodeWriter);
+			m_sWriter = new StreamWriter(strLua, false, CustomDefine.WRITE_ENCODING);
 			if (null == m_sWriter)
 			{
 				return false;

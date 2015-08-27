@@ -74,6 +74,9 @@
     <Compile Include="DataStruct\ActivityBase.cs" />
     <Compile Include="DataStruct\AB_intimeonline.cs" />
     <Compile Include="Common\commondef.cs" />
+    <Compile Include="Item\ItemDefine.cs" />
+    <Compile Include="Item\ItemMgr.cs" />
+    <Compile Include="Log\Log.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +128,7 @@
     <Content Include="NPOI.OpenXml4Net.dll" />
     <Content Include="NPOI.OpenXmlFormats.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

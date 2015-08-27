@@ -36,6 +36,22 @@ namespace Excel2Lua
 			return true;
 		}
 
+		public override bool CheckData()
+		{
+			bool bReturn = true;
+			foreach (IntimeOnlineInfo info in m_listOwn)
+			{
+				bool bCheckMale = ItemMgr.Instance.CheckItemAndLogError((ushort)info.malereward_itemid, m_strExcelSheet);
+				bool bCheckFemale = ItemMgr.Instance.CheckItemAndLogError((ushort)info.femalereward_itemid, m_strExcelSheet);
+				if (!bCheckFemale || !bCheckMale)
+				{
+					bReturn = false;
+				}
+			}
+
+			return bReturn;
+		}
+
 		public override bool SaveData(StreamWriter sw)
 		{
 			if (!base.SaveData(sw))

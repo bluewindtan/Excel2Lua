@@ -30,11 +30,13 @@ namespace Excel2Lua
 			dlg.Description = "Please select a folder:";
 			if (DialogResult.OK == dlg.ShowDialog())
 			{
+				LogMgr.Instance.OpenLog();
 				string sDirectory = dlg.SelectedPath;
 				if (ProcessDirectory(sDirectory, bExcelSuffix))
 				{
 					MessageBox.Show("Process finished！OK！");
 				}
+				LogMgr.Instance.CloseLog();
 			}
 		}
 
@@ -64,6 +66,7 @@ namespace Excel2Lua
 						catch (System.Exception ex)
 						{
 							string strMessage = "Failed to convert excel '" + fi.Name + "'.\r\nError is " + ex.Message;
+							LogMgr.Instance.WriteLog(strMessage);
 							strMessage += "\r\nDo you want to continue???";
 							DialogResult dlgResult = MessageBox.Show(strMessage, "error", MessageBoxButtons.OKCancel);
 							if (DialogResult.OK == dlgResult)

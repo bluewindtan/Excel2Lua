@@ -126,13 +126,17 @@ namespace Excel2Lua
 					nReturn = ConvertE2L_Box(sDirectory, sFile);
 				}
 			}
+			else
+			{
+
+			}
 
 			return nReturn;
 		}
 
 		private static bool ConvertE2L_Box(string sDirectory, string sFile)
 		{
-			if (!sFile.Contains(CustomDefine.BOX_EXCEL_NAME))
+			if (LuaType.Box != CustomFunc.JudgeType(sFile))
 			{
 				return true;
 			}
@@ -146,6 +150,11 @@ namespace Excel2Lua
 			{
 				return false;
 			}
+			// check data 
+			if (!e2lBox.CheckData())
+			{
+				//return false; // continue to process other files
+			}
 			// save to lua 
 			if (!e2lBox.SaveToLua())
 			{
@@ -157,7 +166,7 @@ namespace Excel2Lua
 
 		private static bool ConvertE2L_Packet(string sDirectory, string sFile)
 		{
-			if (!sFile.Contains(CustomDefine.PACKET_EXCEL_NAME))
+			if (LuaType.Packet != CustomFunc.JudgeType(sFile))
 			{
 				return true;
 			}
@@ -171,6 +180,11 @@ namespace Excel2Lua
 			{
 				return false;
 			}
+			// check data 
+			if (!e2lPacket.CheckData())
+			{
+				//return false; // continue to process other files
+			}
 			// save to lua 
 			if (!e2lPacket.SaveToLua())
 			{
@@ -182,6 +196,10 @@ namespace Excel2Lua
 
 		private static bool ConvertE2L_Activity(string sDirectory, string sFile)
 		{
+			if (LuaType.Activity != CustomFunc.JudgeType(sFile))
+			{
+				return true;
+			}
 			string strFullExcelName = sDirectory + "\\" + sFile;
 			// create the operator of this excel 
 			E2LBase operE2L = E2LDataMgr.Instance.CreateOperater(strFullExcelName);
@@ -195,7 +213,11 @@ namespace Excel2Lua
 			{
 				return false;
 			}
-
+			// check data 
+			if (!operE2L.CheckData())
+			{
+				//return false; // continue to process other files
+			}
 			// save to lua 
 			if (!operE2L.SaveToLua())
 			{
@@ -221,6 +243,9 @@ namespace Excel2Lua
 				m_dicE2LData.Add(CustomDefine.EXCEL_NAME[i],
 					new E2LData(CustomDefine.EXCEL_NAME[1], CustomDefine.LUA_NAME[i]));
 			}
+
+			// read item excel file 
+			ItemMgr.Instance.ReadExcelItem(Environment.CurrentDirectory + "\\source\\" + CustomDefine.ITEM_EXCEL_FILE);
 		}
 
 	}
