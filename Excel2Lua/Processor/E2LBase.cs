@@ -13,8 +13,7 @@ namespace Excel2Lua
 		protected string m_strDirector = "";		
 		protected string m_strExcel = "";			 
 		protected string m_strExtension = "";
-		protected string m_strLua = "";
-		protected string m_strLogWhere = "";		
+		protected string m_strLua = "";	
 
 		public ActivityBase actiBase = null;
 
@@ -28,7 +27,6 @@ namespace Excel2Lua
 			m_strExcel = strExcel;
 			m_strExtension = strExtension;
 			m_strLua = strLua;
-			m_strLogWhere = strExcel;
 		}
 
 		public bool ReadExcel()

@@ -60,7 +60,7 @@ namespace Excel2Lua
 							}
 							else 
 							{
-								E2LDataMgr.ConvertE2L(fi.DirectoryName, fi.Name);
+								E2LDataMgr.Instance.ConvertE2L(fi.DirectoryName, fi.Name);
 							}
 						}
 						catch (System.Exception ex)

@@ -69,7 +69,7 @@ namespace Excel2Lua
 			return operE2L;
 		}
 
-		public static bool ConvertE2L(string sDirectory, string sFile)
+		public bool ConvertE2L(string sDirectory, string sFile)
 		{
 			// analyze the name of excel file 
 			if (sFile.Length <= 0)
@@ -79,23 +79,11 @@ namespace Excel2Lua
 			string strFullExcelName = sDirectory + "\\" + sFile;
 			bool nReturn = false;
 			LuaType nLuaType = CustomFunc.JudgeType(sFile);
-			if (LuaType.Activity == nLuaType)
-			{
-				nReturn = ConvertE2L_Activity(sDirectory, sFile);
-			}
-			else if (LuaType.Packet == nLuaType)
-			{
-				nReturn = ConvertE2L_Packet(sDirectory, sFile);
-			}
-			else if (LuaType.Box == nLuaType)
-			{
-				nReturn = ConvertE2L_Box(sDirectory, sFile);
-			}
-
+			nReturn = ConvertE2LByType(sDirectory, sFile, nLuaType);
 			return nReturn;
 		}
 
-		public static bool ConvertE2LByType(string sDirectory, string sFile, LuaType nType)
+		public bool ConvertE2LByType(string sDirectory, string sFile, LuaType nType)
 		{
 			// analyze the name of excel file 
 			if (sFile.Length <= 0)
@@ -134,7 +122,7 @@ namespace Excel2Lua
 			return nReturn;
 		}
 
-		private static bool ConvertE2L_Box(string sDirectory, string sFile)
+		private bool ConvertE2L_Box(string sDirectory, string sFile)
 		{
 			if (LuaType.Box != CustomFunc.JudgeType(sFile))
 			{
@@ -164,7 +152,7 @@ namespace Excel2Lua
 			return true;
 		}
 
-		private static bool ConvertE2L_Packet(string sDirectory, string sFile)
+		private bool ConvertE2L_Packet(string sDirectory, string sFile)
 		{
 			if (LuaType.Packet != CustomFunc.JudgeType(sFile))
 			{
@@ -194,7 +182,7 @@ namespace Excel2Lua
 			return true;
 		}
 
-		private static bool ConvertE2L_Activity(string sDirectory, string sFile)
+		private bool ConvertE2L_Activity(string sDirectory, string sFile)
 		{
 			if (LuaType.Activity != CustomFunc.JudgeType(sFile))
 			{
