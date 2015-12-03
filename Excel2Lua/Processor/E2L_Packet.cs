@@ -247,8 +247,8 @@ namespace Excel2Lua
 				bool bReturn = true;
 				foreach (PacketInfo info in m_listReward)
 				{
-					bool bCheckMale = ItemMgr.Instance.CheckItemAndLogError((ushort)info.malereward_itemid, CustomDefine.PACKET_EXCEL_NAME);
-					bool bCheckFemale = ItemMgr.Instance.CheckItemAndLogError((ushort)info.femalereward_itemid, CustomDefine.PACKET_EXCEL_NAME);
+					bool bCheckMale = ItemMgr.Instance.CheckItemAndLogError(CustomDefine.PACKET_EXCEL_NAME, (ushort)info.malereward_itemid, info.malereward_itemcount, info.malereward_itemvalidity);
+					bool bCheckFemale = ItemMgr.Instance.CheckItemAndLogError(CustomDefine.PACKET_EXCEL_NAME, (ushort)info.femalereward_itemid, info.femalereward_itemcount, info.femalereward_itemvalidity);
 					if (!bCheckFemale || !bCheckMale)
 					{
 						bReturn = false;

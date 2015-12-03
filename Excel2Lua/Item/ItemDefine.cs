@@ -99,9 +99,109 @@ namespace Excel2Lua
         [ExcelHeader("参数53")]
         public String Param5 { get; set; }
 
+		// 道具
+		public bool IsEquip()
+		{
+			return AnType_1 == (byte)EItemClassType.eItemClassType_Equip;
+		}
 
+		// 服饰
+		public bool IsCloth()
+		{
+			return IsEquip() && (AnType_2 == (byte)EItemEquipType.eItemEquipType_Cloth);
+		}
+
+		// 徽章
+		public bool IsBadge()
+		{
+			return IsEquip() && (AnType_2 == (byte)EItemEquipType.eItemEquipType_Badge);
+		}
+
+		/////////////////////////////////////////////////////////////////////
+		//一级类型
+		/////////////////////////////////////////////////////////////////////
+
+		//装备，道具
+		public enum EItemClassType
+		{
+			eItemClassType_None = 0,
+			eItemClassType_Equip,       //装备
+			eItemClassType_Expendable,  //道具(消耗品)
+			eItemClassType_Max
+		}
+
+
+		////////////////////////////////////////////////////////////////////
+		//二级类型
+		////////////////////////////////////////////////////////////////////
+
+		// 装备子类型
+		public enum EItemEquipType
+		{
+			eItemEquipType_None = 0,
+			eItemEquipType_Cloth,       //衣服和饰品
+			eItemEquipType_Badge,       //徽章
+			eItemEquipType_Max
+		}
+
+		// 消耗品子类型
+		public enum EItemExpendableType
+		{
+			eItemExpendableType_None = 0,
+			eItemExpendableType_Function,   //功能类
+			eItemExpendableType_Social,     //社交类
+			eItemExpendableType_Addition,   //增益类
+			eItemExpendableType_Packet,     //礼包类
+			eItemExpendableType_Box,        //宝箱类
+			eItemExpendableType_TransForm,  //变身类
+			eItemExpendableType_DynamicBox, //动态宝箱
+			eItemExpendableType_PetEgg,     //宠物蛋
+			eItemExpendableType_PetItem,    //宠物物品
+			eItemExpendableType_Max
+		}
+
+
+		////////////////////////////////////////////////////////////////////
+		// 三级类型
+		////////////////////////////////////////////////////////////////////
+
+		// 衣服子类型
+		public enum EItemClothType
+		{
+			eItemClothType_Invalid = -1,
+			eItemClothType_Hair,          //发型
+			eItemClothType_Face,          //表情
+			eItemClothType_Body,          //上衣
+			eItemClothType_Glove,         //手套
+			eItemClothType_Leg,           //下装
+			eItemClothType_Cap,           //头饰
+			eItemClothType_FacialContent, //脸饰
+			eItemClothType_Shoulder,      //肩膀
+			eItemClothType_Wing,          //翅膀
+			eItemClothType_LeftHand,      //左手持
+			eItemClothType_RightHand,     //右手持
+			eItemClothType_Wrist,         //手腕
+			eItemClothType_Hip,           //臀部
+			eItemClothType_Sock,          //袜子
+			eItemClothType_Feet,          //鞋子
+			eItemClothType_Skin,          //肤色
+			eItemClothType_All,           //全身装，除ItemCloth_Type_Skin
+			eItemClothType_Suit,          //套装
+			eItemClothType_Max,
+
+		}
+
+		// 徽章类型
+		public enum EItemBadgeType
+		{
+			eItemBadgeType_WingdingRing  =  1,  //结婚戒指
+			eItemBadgeType_SpecialRing,         //个性戒指
+			eItemBadgeType_VIP,                 //VIP徽章
+			eItemBadgeType_Show,                //展示特效
+			eItemBadgeType_ExpEffect,           //经验效果
+			eItemBadgeType_CardDecoration,      //名片装饰
+		}
     }
-
 }
 
 

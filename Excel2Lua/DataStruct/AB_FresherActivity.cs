@@ -42,8 +42,8 @@ namespace Excel2Lua
 			bool bReturn = true;
 			foreach (FresherActivityInfo info in m_listOwn)
 			{
-				bool bCheckMale = ItemMgr.Instance.CheckItemAndLogError((ushort)info.malereward_itemid, m_strExcelSheet);
-				bool bCheckFemale = ItemMgr.Instance.CheckItemAndLogError((ushort)info.femalereward_itemid, m_strExcelSheet);
+				bool bCheckMale = ItemMgr.Instance.CheckItemAndLogError(m_strExcelSheet, (ushort)info.malereward_itemid, info.malereward_itemcount, info.malereward_itemvalidity);
+				bool bCheckFemale = ItemMgr.Instance.CheckItemAndLogError(m_strExcelSheet, (ushort)info.femalereward_itemid, info.femalereward_itemcount, info.femalereward_itemvalidity);
 				if (!bCheckFemale || !bCheckMale)
 				{
 					bReturn = false;

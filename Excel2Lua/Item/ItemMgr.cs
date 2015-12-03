@@ -77,16 +77,35 @@ namespace Excel2Lua
 			return m_dicItem.ContainsKey(nItemID);
 		}
 
-		public bool CheckItemAndLogError(ushort nItemID, string strWhereAction)
+		public bool CheckItemAndLogError(string strWhereAction, ushort nItemID, int nItemCount, int nItemValidity)
 		{
-			if (IsHaveItem(nItemID))
+			// check if item exists
+			if (!IsHaveItem(nItemID))
 			{
-				return true;
+				// log 
+				string strMsg = "Not exists Item=" + nItemID.ToString();
+				LogMgr.Instance.WriteLog(strWhereAction + " : " + strMsg);
+				return false;
 			}
-			// log 
-			string strMsg = "Not exists Item=" + nItemID.ToString();
-			LogMgr.Instance.WriteLog(strWhereAction + " : " + strMsg);
-			return false;
+
+			// get item 
+			ItemInfo item = GetItem(nItemID);
+			if (item != null)
+			{
+				// check if cloth or badge 
+				if (item.IsCloth() || item.IsBadge())
+				{
+					if (nItemCount != 1)
+					{
+						// log 
+						string strMsg = "Item=" + nItemID.ToString() + " is cloth or badge, so the count must be 1, not be " + nItemCount.ToString();
+						LogMgr.Instance.WriteLog(strWhereAction + " : " + strMsg);
+						return false;
+					}
+				}
+			}
+
+			return true;
 		}
 	
 	}
