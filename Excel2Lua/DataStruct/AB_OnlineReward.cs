@@ -42,8 +42,8 @@ namespace Excel2Lua
 			bool bReturn = true;
 			foreach (OnlineRewardInfo info in m_listOwn)
 			{
-				bool bCheckMale = ItemMgr.Instance.CheckItemAndLogError(m_strExcelSheet, (ushort)info.malereward_itemid, info.malereward_itemcount, info.malereward_itemvalidity);
-				bool bCheckFemale = ItemMgr.Instance.CheckItemAndLogError(m_strExcelSheet, (ushort)info.femalereward_itemid, info.femalereward_itemcount, info.femalereward_itemvalidity);
+				bool bCheckMale = ItemMgr.Instance.CheckItemAndLogError(m_strExcelSheet, info.malereward_itemid, info.malereward_itemcount, info.malereward_itemvalidity);
+				bool bCheckFemale = ItemMgr.Instance.CheckItemAndLogError(m_strExcelSheet, info.femalereward_itemid, info.femalereward_itemcount, info.femalereward_itemvalidity);
 				if (!bCheckFemale || !bCheckMale)
 				{
 					bReturn = false;
@@ -222,7 +222,7 @@ namespace Excel2Lua
 			[ExcelHeader("累计秒数")]
 			public string onlinetime { get; set; }
 			[ExcelHeader("男奖励物品编号")]
-			public int malereward_itemid { get; set; }
+			public uint malereward_itemid { get; set; }
 			[ExcelHeader("男奖励物品名称")]
 			public string malereward_itemname { get; set; }
 			[ExcelHeader("男奖励物品数量")]
@@ -230,7 +230,7 @@ namespace Excel2Lua
 			[ExcelHeader("男奖励物品时限")]
 			public int malereward_itemvalidity { get; set; }
 			[ExcelHeader("女奖励物品编号")]
-			public int femalereward_itemid { get; set; }
+			public uint femalereward_itemid { get; set; }
 			[ExcelHeader("女奖励物品名称")]
 			public string femalereward_itemname { get; set; }
 			[ExcelHeader("女奖励物品数量")]
@@ -238,7 +238,7 @@ namespace Excel2Lua
 			[ExcelHeader("女奖励物品时限")]
 			public int femalereward_itemvalidity { get; set; }
 			[ExcelHeader("金券奖励")]
-			public int moneyreward { get; set; }
+			public uint moneyreward { get; set; }
 
 			public int HasSameTime(OnlineRewardInfo info)
 			{
@@ -269,11 +269,11 @@ namespace Excel2Lua
 		{
 			int m_nIndex { get; set; }
 			string m_strOnlineTime { get; set; }
-			int m_nMoney { get; set; }
+			uint m_nMoney { get; set; }
 			public List<Lua_Item> m_listMaleItem;
 			public List<Lua_Item> m_listFemaleItem;
 
-			public Lua_Online(int nIndex, string strOnlineTime, int nMoney)
+			public Lua_Online(int nIndex, string strOnlineTime, uint nMoney)
 			{
 				m_nIndex = nIndex;
 				m_strOnlineTime = strOnlineTime;
@@ -294,8 +294,8 @@ namespace Excel2Lua
 				}
 			}
 
-			public void AddItem(int nMaleItemID, int nMaleItemCount, int nMaleItemValidity
-				, int nFemaleItemID, int nFemaleItemCount, int nFemaleItemValidity)
+			public void AddItem(uint nMaleItemID, int nMaleItemCount, int nMaleItemValidity
+				, uint nFemaleItemID, int nFemaleItemCount, int nFemaleItemValidity)
 			{
 				AddItem(true, new Lua_Item(nMaleItemID, nMaleItemCount, nMaleItemValidity));
 				AddItem(false, new Lua_Item(nFemaleItemID, nFemaleItemCount, nFemaleItemValidity));

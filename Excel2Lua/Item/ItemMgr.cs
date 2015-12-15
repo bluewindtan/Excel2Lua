@@ -10,7 +10,7 @@ namespace Excel2Lua
 	{
 		private static ItemMgr instance = null;
 		private static readonly object padlock = new object();
-		private Dictionary< ushort, ItemInfo > m_dicItem = null;
+		private Dictionary< uint, ItemInfo > m_dicItem = null;
 
 		public static ItemMgr Instance
 		{
@@ -36,33 +36,40 @@ namespace Excel2Lua
 			{
 				return;
 			}
-			m_dicItem = new Dictionary< ushort, ItemInfo >();
+			m_dicItem = new Dictionary< uint, ItemInfo >();
 			ExcelReader reader = new ExcelReader(sFile);
 			List<ItemInfo> itemList = reader.GetSheetData<ItemInfo>("道具");
 			List<ItemInfo> clothList = reader.GetSheetData<ItemInfo>("服饰");
+			List<ItemInfo> oldEffectClothList = reader.GetSheetData<ItemInfo>("旧特效服饰");
 			List<ItemInfo> badgeList = reader.GetSheetData<ItemInfo>("徽章");
 			List<ItemInfo> externItemList = reader.GetSheetData<ItemInfo>("扩展物品");
 			reader.Close();
 
-			foreach (ItemInfo info in itemList)
+			foreach (ItemInfo item in itemList)
 			{
-				m_dicItem.Add(info.Type, info);
+				m_dicItem.Add(item.Type, item);
 			}
-			foreach (ItemInfo info in clothList)
+			foreach (ItemInfo item in clothList)
 			{
-				m_dicItem.Add(info.Type, info);
+				item.bOldEffectCloth = false;
+				m_dicItem.Add(item.Type, item);
+            }
+			foreach (ItemInfo item in oldEffectClothList)
+			{
+				item.bOldEffectCloth = true;
+				m_dicItem.Add(item.Type, item);
+			}			
+			foreach (ItemInfo item in badgeList)
+			{
+				m_dicItem.Add(item.Type, item);
 			}
-			foreach (ItemInfo info in badgeList)
+			foreach (ItemInfo item in externItemList)
 			{
-				m_dicItem.Add(info.Type, info);
-			}
-			foreach (ItemInfo info in externItemList)
-			{
-				m_dicItem.Add(info.Type, info);
+				m_dicItem.Add(item.Type, item);
 			}
 		}
 
-		public ItemInfo GetItem(ushort nItemID)
+		public ItemInfo GetItem(uint nItemID)
 		{
 			if (m_dicItem.ContainsKey(nItemID))
 			{
@@ -72,12 +79,12 @@ namespace Excel2Lua
 			return null;
 		}
 
-		public bool IsHaveItem(ushort nItemID)
+		public bool IsHaveItem(uint nItemID)
 		{
 			return m_dicItem.ContainsKey(nItemID);
 		}
 
-		public bool CheckItemAndLogError(string strWhereAction, ushort nItemID, int nItemCount, int nItemValidity)
+		public bool CheckItemAndLogError(string strWhereAction, uint nItemID, int nItemCount, int nItemValidity)
 		{
 			// check if item exists
 			if (!IsHaveItem(nItemID))

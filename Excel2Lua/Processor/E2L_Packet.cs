@@ -89,7 +89,7 @@ namespace Excel2Lua
 		class PacketInfo
 		{
 			[ExcelHeader("男奖励物品编号")]
-			public int malereward_itemid { get; set; }
+			public uint malereward_itemid { get; set; }
 			[ExcelHeader("男奖励物品名称")]
 			public string malereward_itemname { get; set; }
 			[ExcelHeader("男奖励物品数量")]
@@ -97,7 +97,7 @@ namespace Excel2Lua
 			[ExcelHeader("男奖励物品时限")]
 			public int malereward_itemvalidity { get; set; }
 			[ExcelHeader("女奖励物品编号")]
-			public int femalereward_itemid { get; set; }
+			public uint femalereward_itemid { get; set; }
 			[ExcelHeader("女奖励物品名称")]
 			public string femalereward_itemname { get; set; }
 			[ExcelHeader("女奖励物品数量")]
@@ -247,8 +247,8 @@ namespace Excel2Lua
 				bool bReturn = true;
 				foreach (PacketInfo info in m_listReward)
 				{
-					bool bCheckMale = ItemMgr.Instance.CheckItemAndLogError(CustomDefine.PACKET_EXCEL_NAME, (ushort)info.malereward_itemid, info.malereward_itemcount, info.malereward_itemvalidity);
-					bool bCheckFemale = ItemMgr.Instance.CheckItemAndLogError(CustomDefine.PACKET_EXCEL_NAME, (ushort)info.femalereward_itemid, info.femalereward_itemcount, info.femalereward_itemvalidity);
+					bool bCheckMale = ItemMgr.Instance.CheckItemAndLogError(CustomDefine.PACKET_EXCEL_NAME, info.malereward_itemid, info.malereward_itemcount, info.malereward_itemvalidity);
+					bool bCheckFemale = ItemMgr.Instance.CheckItemAndLogError(CustomDefine.PACKET_EXCEL_NAME, info.femalereward_itemid, info.femalereward_itemcount, info.femalereward_itemvalidity);
 					if (!bCheckFemale || !bCheckMale)
 					{
 						bReturn = false;

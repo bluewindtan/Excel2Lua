@@ -126,11 +126,11 @@ namespace Excel2Lua
 	//////////////////////////////////////////////////
 	public class Lua_Item
 	{
-		public int m_nID { get; set; }
+		public uint m_nID { get; set; }
 		public int m_nCount { get; set; }
 		public int m_nValidity { get; set; }
 
-		public Lua_Item(int nID, int nCount, int nValidity)
+		public Lua_Item(uint nID, int nCount, int nValidity)
 		{
 			m_nID = nID;
 			m_nCount = nCount;

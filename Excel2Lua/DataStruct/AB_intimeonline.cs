@@ -41,8 +41,8 @@ namespace Excel2Lua
 			bool bReturn = true;
 			foreach (IntimeOnlineInfo info in m_listOwn)
 			{
-				bool bCheckMale = ItemMgr.Instance.CheckItemAndLogError(m_strExcelSheet, (ushort)info.malereward_itemid, info.malereward_itemcount, info.malereward_itemvalidity);
-				bool bCheckFemale = ItemMgr.Instance.CheckItemAndLogError(m_strExcelSheet, (ushort)info.femalereward_itemid, info.femalereward_itemcount, info.femalereward_itemvalidity);
+				bool bCheckMale = ItemMgr.Instance.CheckItemAndLogError(m_strExcelSheet, info.malereward_itemid, info.malereward_itemcount, info.malereward_itemvalidity);
+				bool bCheckFemale = ItemMgr.Instance.CheckItemAndLogError(m_strExcelSheet, info.femalereward_itemid, info.femalereward_itemcount, info.femalereward_itemvalidity);
 				if (!bCheckFemale || !bCheckMale)
 				{
 					bReturn = false;
@@ -215,7 +215,7 @@ namespace Excel2Lua
 			[ExcelHeader("触发时间")]
 			public string triggeringtime { get; set; }
 			[ExcelHeader("男奖励物品编号")]
-			public int malereward_itemid { get; set; }
+			public uint malereward_itemid { get; set; }
 			[ExcelHeader("男奖励物品名称")]
 			public string malereward_itemname { get; set; }
 			[ExcelHeader("男奖励物品数量")]
@@ -223,7 +223,7 @@ namespace Excel2Lua
 			[ExcelHeader("男奖励物品时限")]
 			public int malereward_itemvalidity { get; set; }
 			[ExcelHeader("女奖励物品编号")]
-			public int femalereward_itemid { get; set; }
+			public uint femalereward_itemid { get; set; }
 			[ExcelHeader("女奖励物品名称")]
 			public string femalereward_itemname { get; set; }
 			[ExcelHeader("女奖励物品数量")]
@@ -231,7 +231,7 @@ namespace Excel2Lua
 			[ExcelHeader("女奖励物品时限")]
 			public int femalereward_itemvalidity { get; set; }
 			[ExcelHeader("金券奖励")]
-			public int moneyreward { get; set; }
+			public uint moneyreward { get; set; }
 			[ExcelHeader("邮件标题")]
 			public string mailtitle { get; set; }
 			[ExcelHeader("邮件内容")]

@@ -10,7 +10,7 @@ namespace Excel2Lua
     public class ItemInfo
     {
         [ExcelHeader("物品ID")]
-        public ushort Type { get; set; }
+        public uint Type { get; set; }
         [ExcelHeader("物品名称")]
         public string Name { get; set; }
         [ExcelHeader("类别")]
@@ -99,6 +99,7 @@ namespace Excel2Lua
         [ExcelHeader("参数53")]
         public String Param5 { get; set; }
 
+		public bool bOldEffectCloth { get; set; }
 		// 道具
 		public bool IsEquip()
 		{
